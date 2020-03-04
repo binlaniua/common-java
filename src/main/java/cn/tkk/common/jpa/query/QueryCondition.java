@@ -55,6 +55,10 @@ public class QueryCondition {
             case like:
                 return cb.like(expression, "%" + value + "%");
 
+            //
+            case likeForce:
+                return cb.like(expression.as(String.class), "%" + value + "%");
+
             // 大于
             case gt:
                 return cb.gt(expression, (Number) value);
@@ -105,7 +109,6 @@ public class QueryCondition {
                 if (timeRange.length == 2) {
                     return cb.between(expression, timeRange[0], timeRange[1]);
                 } else {
-//                    log.warn("betweenDate 需要两个日期");
                     return null;
                 }
 

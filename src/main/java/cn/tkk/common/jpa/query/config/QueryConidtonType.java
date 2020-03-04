@@ -28,6 +28,9 @@ public enum QueryConidtonType {
     //
     like,
 
+    // 强制匹配, 用于自定义 converter
+    likeForce,
+
     // 右%
     rightLike,
 
