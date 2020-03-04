@@ -2,16 +2,17 @@ package cn.tkk.common.service;
 
 
 import cn.tkk.common.exception.SystemException;
+import cn.tkk.common.jpa.Domain;
+import cn.tkk.common.jpa.PageRepository;
+import cn.tkk.common.jpa.query.PredicateBuilder;
+import cn.tkk.common.jpa.query.QueryFactory;
 import cn.tkk.common.request.AddRequest;
 import cn.tkk.common.request.EditRequest;
 import cn.tkk.common.request.InfoRequest;
 import cn.tkk.common.request.PageRequest;
 import cn.tkk.common.util.BeanHelper;
-import cn.tkk.common.jpa.Domain;
-import cn.tkk.common.jpa.PageRepository;
-import cn.tkk.common.jpa.query.PredicateBuilder;
-import cn.tkk.common.jpa.query.QueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,6 +141,23 @@ public abstract class CRUDService<Entity extends Domain<ID>, ID extends Serializ
         return this.jpaRepository.findAll();
     }
 
+    /**
+     * @param <KEY>
+     * @param group
+     * @return
+     */
+    public <KEY> Map<KEY, List<Entity>> map(final Function<Entity, KEY> group) {
+        return this.map(null, group);
+    }
+
+    /**
+     * @param <KEY>
+     * @return
+     */
+    public <KEY> Map<KEY, Entity> mapDistinct(final Function<Entity, KEY> distinct) {
+        return this.mapDistinct(null, distinct);
+    }
+
 
     /**
      * @param <KEY>
@@ -148,9 +166,9 @@ public abstract class CRUDService<Entity extends Domain<ID>, ID extends Serializ
      * @return
      */
     public <KEY> Map<KEY, List<Entity>> map(final List<ID> idList, final Function<Entity, KEY> group) {
-        return this.all(idList)
-                   .stream()
-                   .collect(Collectors.groupingBy(group));
+        final List<Entity> entityList = CollectionUtils.isEmpty(idList) ? this.all() : this.all(idList);
+        return entityList.stream()
+                         .collect(Collectors.groupingBy(group));
     }
 
     /**
@@ -159,9 +177,10 @@ public abstract class CRUDService<Entity extends Domain<ID>, ID extends Serializ
      * @return
      */
     public <KEY> Map<KEY, Entity> mapDistinct(final List<ID> idList, final Function<Entity, KEY> distinct) {
-        return this.all(idList)
-                   .stream()
-                   .collect(Collectors.toMap(distinct, Function.identity()));
+        final List<Entity> entityList = CollectionUtils.isEmpty(idList) ? this.all() : this.all(idList);
+        return entityList
+                .stream()
+                .collect(Collectors.toMap(distinct, Function.identity()));
     }
 
 
@@ -428,15 +447,15 @@ public abstract class CRUDService<Entity extends Domain<ID>, ID extends Serializ
      * @param query
      * @return
      */
-    public boolean exist(final PredicateBuilder query) {
-        return this.jpaSpecificationExecutor.count(query.to()) > 0;
+    public boolean exist(final PredicateBuilder<Entity> query) {
+        return this.jpaSpecificationExecutor.count(query) > 0;
     }
 
     /**
      * @param query
      * @return
      */
-    public Long count(final PredicateBuilder query) {
+    public Long count(final PredicateBuilder<Entity> query) {
         return this.jpaSpecificationExecutor.count(query);
     }
 
