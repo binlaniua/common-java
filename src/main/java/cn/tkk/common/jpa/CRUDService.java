@@ -1,9 +1,7 @@
-package cn.tkk.common.service;
+package cn.tkk.common.jpa;
 
 
 import cn.tkk.common.exception.SystemException;
-import cn.tkk.common.jpa.Domain;
-import cn.tkk.common.jpa.PageRepository;
 import cn.tkk.common.jpa.query.PredicateBuilder;
 import cn.tkk.common.jpa.query.QueryFactory;
 import cn.tkk.common.request.AddRequest;
@@ -21,7 +19,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
@@ -41,7 +38,6 @@ import java.util.stream.Collectors;
  * @param <Entity>
  */
 @Slf4j
-@Service
 @Transactional(readOnly = true)
 public abstract class CRUDService<Entity extends Domain<ID>, ID extends Serializable> implements ApplicationContextAware, InitializingBean {
 
