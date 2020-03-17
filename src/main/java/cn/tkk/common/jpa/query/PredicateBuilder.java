@@ -1,6 +1,7 @@
 package cn.tkk.common.jpa.query;
 
 import cn.tkk.common.jpa.query.config.QueryJoinType;
+import cn.tkk.common.jpa.query.factory.PredicateFetchFactory;
 import cn.tkk.common.jpa.query.value.ExistColumn;
 import cn.tkk.common.jpa.query.value.FetchItem;
 import cn.tkk.common.jpa.query.value.QueryItem;
@@ -12,7 +13,9 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,13 +42,18 @@ public class PredicateBuilder<T> implements Specification<T> {
         return new PredicateBuilder();
     }
 
+    /**
+     *
+     */
+    private PredicateFetchFactory fetchFactory;
     private List<QueryItems> whereList = new LinkedList<>();
     private List<ExistColumn> whereExistList = new LinkedList<>();
     private List<FetchItem> fetchList = new LinkedList<>();
     private List<SortItem> sortList = new LinkedList<>();
-    private Map<String, Join> joinMap = new HashMap<>();
-    private boolean isFetchJoin;
 
+    /**
+     *
+     */
     private Object values;
 
 
@@ -61,6 +69,17 @@ public class PredicateBuilder<T> implements Specification<T> {
     }
 
     /**
+     * 抓取
+     *
+     * @param column
+     * @param joinType
+     * @return
+     */
+    public PredicateBuilder fetch(final String column, final JoinType joinType) {
+        return this.fetch(new FetchItem(column, joinType));
+    }
+
+    /**
      * 排序
      *
      * @param sortItem
@@ -72,6 +91,27 @@ public class PredicateBuilder<T> implements Specification<T> {
     }
 
     /**
+     * 排序
+     *
+     * @param column
+     * @param isDesc
+     * @return
+     */
+    public PredicateBuilder sort(final String column, final boolean isDesc) {
+        return this.sort(new SortItem(column, isDesc));
+    }
+
+    /**
+     * 清空排序
+     *
+     * @return
+     */
+    public PredicateBuilder sortClean() {
+        this.sortList.clear();
+        return this;
+    }
+
+    /**
      * and
      *
      * @param queryItems
@@ -79,7 +119,7 @@ public class PredicateBuilder<T> implements Specification<T> {
      */
     public PredicateBuilder and(final QueryItem... queryItems) {
         final List<QueryItem> items = Stream.of(queryItems)
-                                            .filter(v -> v.valid())
+                                            .filter(QueryItem::valid)
                                             .collect(Collectors.toList());
         if (!items.isEmpty()) {
             this.whereList.add(new QueryItems(items, true));
@@ -94,10 +134,9 @@ public class PredicateBuilder<T> implements Specification<T> {
      * @return
      */
     public PredicateBuilder exist(final ExistColumn existColumn) {
-        if (existColumn == null) {
-            return this;
+        if (existColumn != null) {
+            this.whereExistList.add(existColumn);
         }
-        this.whereExistList.add(existColumn);
         return this;
     }
 
@@ -109,7 +148,7 @@ public class PredicateBuilder<T> implements Specification<T> {
      */
     public PredicateBuilder or(final QueryItem... queryItems) {
         final List<QueryItem> items = Stream.of(queryItems)
-                                            .filter(v -> v.valid())
+                                            .filter(QueryItem::valid)
                                             .collect(Collectors.toList());
         if (!items.isEmpty()) {
             this.whereList.add(new QueryItems(items, false));
@@ -126,24 +165,8 @@ public class PredicateBuilder<T> implements Specification<T> {
     public List<Predicate> toPredicateCondition(final Root<T> root, final CriteriaQuery<?> criteriaQuery, final CriteriaBuilder criteriaBuilder) {
         final List<Predicate> predicates = new LinkedList<>();
 
-        // 根据返回类型判断是否需要进行级联
-        // 比如 select count(x) 这种就不要级联, 只是需要判断
-        this.isFetchJoin = this.needFetch(criteriaQuery);
-
-        // 关联抓取
-        if (!this.fetchList.isEmpty() && this.isFetchJoin) {
-            for (final FetchItem fetch : this.fetchList) {
-                final String[] split = StringUtils.split(fetch.getColumn(), ".");
-                Join base = null;
-                for (int i = 0; i < split.length; i++) {
-                    final String fetchEntity = split[i];
-                    base = (Join) (i == 0 ? root : base).fetch(fetchEntity, fetch.getJoin());
-                    if (fetch.isQueryJoin()) {
-                        this.joinMap.put(fetchEntity, base);
-                    }
-                }
-            }
-        }
+        //
+        this.fetchFactory = PredicateFetchFactory.build(root, criteriaQuery, this.fetchList);
 
         // 条件
         for (final QueryItems where : this.whereList) {
@@ -158,7 +181,7 @@ public class PredicateBuilder<T> implements Specification<T> {
             }
         }
 
-        //
+        // exist 查询
         for (final ExistColumn existColumn : this.whereExistList) {
             final Predicate predicate = this.toPredicateExist(existColumn, root, criteriaQuery, criteriaBuilder);
             if (predicate != null) {
@@ -168,9 +191,9 @@ public class PredicateBuilder<T> implements Specification<T> {
 
 
         // 排序
-        if (!this.sortList.isEmpty() && this.isFetchJoin) {
+        if (this.fetchFactory.isFetch()) {
             for (final SortItem sort : this.sortList) {
-                final Expression expression = this.toExpression(root, sort.getColumn(), null);
+                final Expression expression = this.toExpression(root, sort.getColumn(), QueryJoinType.Inner);
                 if (sort.isDesc()) {
                     criteriaQuery.orderBy(criteriaBuilder.desc(expression));
                 } else {
@@ -247,30 +270,7 @@ public class PredicateBuilder<T> implements Specification<T> {
         }
         Join join = null;
         for (int i = 0; i < split.length - 1; i++) {
-            final String joinEntity = split[i];
-            // 已经被fetch过了
-            if (this.isFetchJoin && this.joinMap.containsKey(joinEntity)) {
-                join = this.joinMap.get(joinEntity);
-                continue;
-            }
-            //
-            final JoinType joinType;
-            switch (queryJoinType) {
-                case Left:
-                    joinType = JoinType.LEFT;
-                    break;
-                case Right:
-                    joinType = JoinType.RIGHT;
-                    break;
-                default:
-                    joinType = JoinType.INNER;
-                    break;
-            }
-            if (i == 0) {
-                join = root.join(split[i], joinType);
-            } else {
-                join = join.join(split[i], joinType);
-            }
+            join = this.fetchFactory.getJoin(i == 0 ? (Join) root : join, split[i], queryJoinType);
         }
         return join.get(split[split.length - 1]);
     }
@@ -282,29 +282,6 @@ public class PredicateBuilder<T> implements Specification<T> {
                 criteriaQuery,
                 this.toExpression(root, item.getColumn(), item.getJoin())
         );
-    }
-
-    /**
-     * 是否能用fetch关联获取
-     *
-     * @param criteriaQuery
-     * @return
-     */
-    public boolean needFetch(final CriteriaQuery<?> criteriaQuery) {
-        final Class<?> resultType = criteriaQuery.getResultType();
-        if (resultType.isAssignableFrom(Long.class)) {
-            return false;
-        }
-        if (resultType.isAssignableFrom(Integer.class)) {
-            return false;
-        }
-        if (resultType.isAssignableFrom(Boolean.class)) {
-            return false;
-        }
-        if (resultType.isAssignableFrom(Double.class)) {
-            return false;
-        }
-        return true;
     }
 
 

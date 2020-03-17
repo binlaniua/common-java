@@ -3,7 +3,7 @@ package cn.tkk.common.jpa.query.config;
 /**
  * Created by Tkk on 2018/7/21.
  */
-public enum QueryConidtonType {
+public enum QueryConditionType {
 
     // 等于
     equal,

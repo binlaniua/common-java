@@ -24,7 +24,4 @@ public class FetchItem {
      * @return
      */
     JoinType join;
-
-
-    boolean queryJoin;
 }

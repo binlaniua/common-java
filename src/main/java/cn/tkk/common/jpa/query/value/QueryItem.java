@@ -1,6 +1,6 @@
 package cn.tkk.common.jpa.query.value;
 
-import cn.tkk.common.jpa.query.config.QueryConidtonType;
+import cn.tkk.common.jpa.query.config.QueryConditionType;
 import cn.tkk.common.jpa.query.config.QueryJoinType;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
@@ -25,13 +25,13 @@ public class QueryItem {
         this.value = value;
     }
 
-    public QueryItem(final String column, final Object value, final QueryConidtonType type) {
+    public QueryItem(final String column, final Object value, final QueryConditionType type) {
         this.column = column;
         this.value = value;
         this.type = type;
     }
 
-    public QueryItem(final String column, final Object value, final QueryConidtonType type, final QueryJoinType join, final boolean nullAble, final boolean blankAble) {
+    public QueryItem(final String column, final Object value, final QueryConditionType type, final QueryJoinType join, final boolean nullAble, final boolean blankAble) {
         this.column = column;
         this.value = value;
         this.type = type;
@@ -40,13 +40,13 @@ public class QueryItem {
         this.blankAble = blankAble;
     }
 
-    String column;
+    private String column;
 
-    Object value;
+    private Object value;
 
-    QueryConidtonType type = QueryConidtonType.equal;
+    private QueryConditionType type = QueryConditionType.equal;
 
-    QueryJoinType join = QueryJoinType.None;
+    private QueryJoinType join = QueryJoinType.None;
 
     boolean nullAble = false;
 

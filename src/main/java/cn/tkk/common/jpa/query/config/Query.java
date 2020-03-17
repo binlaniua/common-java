@@ -25,7 +25,7 @@ public @interface Query {
      *
      * @return
      */
-    QueryConidtonType type() default QueryConidtonType.equal;
+    QueryConditionType type() default QueryConditionType.equal;
 
     /**
      * Join条件
