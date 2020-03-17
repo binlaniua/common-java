@@ -25,9 +25,4 @@ public @interface JoinFetch {
      * @return
      */
     JoinType join() default JoinType.INNER;
-
-    /**
-     * @return
-     */
-    boolean queryJoin() default true;
 }

@@ -48,7 +48,7 @@ public class QueryFactory {
         final JoinFetchs joinFetchs = (JoinFetchs) clazz.getAnnotation(JoinFetchs.class);
         if (joinFetchs != null) {
             for (final JoinFetch joinFetch : joinFetchs.value()) {
-                predicateBuilder.fetch(new FetchItem(joinFetch.column(), joinFetch.join(), joinFetch.queryJoin()));
+                predicateBuilder.fetch(new FetchItem(joinFetch.column(), joinFetch.join()));
             }
         }
 
