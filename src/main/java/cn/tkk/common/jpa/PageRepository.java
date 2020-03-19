@@ -1,12 +1,13 @@
 package cn.tkk.common.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -18,7 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by Kun Tang on 2018/11/7.
  */
-@Repository
+@Component
+@ConditionalOnBean(EntityManager.class)
 public class PageRepository {
 
     @Autowired
