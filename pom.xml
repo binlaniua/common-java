@@ -232,52 +232,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.1</version>
-                <configuration>
-                    <!--设置部署目录-->
-                    <altDeploymentRepository>
-                        internal.repo::default::file://${project.build.directory}/mvn-repo
-                    </altDeploymentRepository>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <!--
-                  这里需要使用 0.12, 0.9 部署时会出错，具体查看
-                  https://github.com/github/maven-plugins/issues/105
-                -->
-                <version>0.12</version>
-                <configuration>
-                    <!--git 提交的消息-->
-                    <message>Maven artifacts for ${project.version}</message>
-                    <!--禁用网页处理-->
-                    <noJekyll>true</noJekyll>
-                    <!--部署的目录，这里是和上面的 maven-deploy-plugin 的 configuration.altDeploymentRepository 对应-->
-                    <outputDirectory>${project.build.directory}/mvn-repo
-                    </outputDirectory> <!-- matches distribution management repository url above -->
-                    <!--远程分支名-->
-                    <branch>refs/heads/mvn-repo</branch>
-                    <includes>
-                        <include>**/*</include>
-                    </includes>
-                    <!--github 仓库的名字-->
-                    <repositoryName>common-java</repositoryName>
-                    <!--github 用户名-->
-                    <repositoryOwner>binlaniua</repositoryOwner>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <!--suppress MybatisMapperXmlInspection -->
-                            <goal>site</goal>
-                        </goals>
-                        <phase>deploy</phase>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 </project>
