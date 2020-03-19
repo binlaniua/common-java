@@ -9,8 +9,8 @@
 
 ```xml
 <dependency>
-    <groupId>cn.tkk</groupId>
-    <artifactId>common</artifactId>
+    <groupId>com.github.binlaniua</groupId>
+    <artifactId>common-java</artifactId>
     <version>1.1</version>
 </dependency>
 ```
