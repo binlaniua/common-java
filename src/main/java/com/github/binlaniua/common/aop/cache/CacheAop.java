@@ -1,8 +1,8 @@
 package com.github.binlaniua.common.aop.cache;
 
-import cn.tkk.common.aop.BaseAop;
-import cn.tkk.common.util.SpelHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.binlaniua.common.aop.BaseAop;
+import com.github.binlaniua.common.util.SpelHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -43,7 +43,7 @@ public class CacheAop extends BaseAop implements InitializingBean {
      * @param proceedingJoinPoint
      * @throws Throwable
      */
-    @Around("@annotation(cn.tkk.common.aop.cache.Cacheable)")
+    @Around("@annotation(com.github.binlaniua.common.aop.cache.Cacheable)")
     Object cacheable(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         try {
             // 1. 获取方法
@@ -102,7 +102,7 @@ public class CacheAop extends BaseAop implements InitializingBean {
      * @param joinPoint
      * @throws Throwable
      */
-    @Before("@annotation(cn.tkk.common.aop.cache.CacheEvict)")
+    @Before("@annotation(com.github.binlaniua.common.aop.cache.CacheEvict)")
     void cacheEvict(final JoinPoint joinPoint) throws Throwable {
         final CacheEvict annotation = this.getAnnotation(joinPoint, CacheEvict.class);
         // 清空所有

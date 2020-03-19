@@ -1,6 +1,6 @@
 package com.github.binlaniua.common.jpa;
 
-import cn.tkk.common.jpa.generator.SnowflaskGenerator;
+import com.github.binlaniua.common.jpa.generator.SnowflaskGenerator;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;

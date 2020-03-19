@@ -1,6 +1,5 @@
 package com.github.binlaniua.common.http.service;
 
-import cn.tkk.common.http.service.result.ResultExecute;
 import com.github.binlaniua.common.http.service.result.ResultExecute;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

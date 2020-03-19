@@ -1,6 +1,6 @@
 package com.github.binlaniua.common.valid;
 
-import cn.tkk.common.context.RequestHolder;
+import com.github.binlaniua.common.context.RequestHolder;
 import com.google.code.kaptcha.Constants;
 import org.apache.commons.lang.StringUtils;
 

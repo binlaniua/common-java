@@ -1,6 +1,6 @@
 package com.github.binlaniua.common.event;
 
-import cn.tkk.common.event.publish.InternalEventPublisher;
+import com.github.binlaniua.common.event.publish.InternalEventPublisher;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

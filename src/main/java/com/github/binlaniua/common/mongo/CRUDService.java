@@ -1,14 +1,8 @@
 package com.github.binlaniua.common.mongo;
 
 
-import cn.tkk.common.exception.SystemException;
-import cn.tkk.common.mongo.query.Condition;
-import cn.tkk.common.request.AddRequest;
-import cn.tkk.common.request.EditRequest;
-import cn.tkk.common.request.InfoRequest;
-import cn.tkk.common.request.PageRequest;
-import cn.tkk.common.util.BeanHelper;
 import com.github.binlaniua.common.exception.SystemException;
+import com.github.binlaniua.common.mongo.query.Condition;
 import com.github.binlaniua.common.request.AddRequest;
 import com.github.binlaniua.common.request.EditRequest;
 import com.github.binlaniua.common.request.InfoRequest;

@@ -1,6 +1,5 @@
 package com.github.binlaniua.common.request;
 
-import cn.tkk.common.jpa.query.value.SortItem;
 import com.github.binlaniua.common.jpa.query.value.SortItem;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

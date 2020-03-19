@@ -1,4 +1,4 @@
-import cn.tkk.common.valid.DBLength;
+import com.github.binlaniua.common.valid.DBLength;
 import lombok.Data;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package com.github.binlaniua.common.jwt;
 
-import cn.tkk.common.context.LoginUser;
-import cn.tkk.common.exception.SystemException;
+import com.github.binlaniua.common.context.LoginUser;
+import com.github.binlaniua.common.exception.SystemException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

@@ -1,7 +1,7 @@
 package com.github.binlaniua.common.event.publish;
 
-import cn.tkk.common.event.Event;
-import cn.tkk.common.event.EventPublisher;
+import com.github.binlaniua.common.event.Event;
+import com.github.binlaniua.common.event.EventPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

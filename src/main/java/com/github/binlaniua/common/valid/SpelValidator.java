@@ -1,6 +1,5 @@
 package com.github.binlaniua.common.valid;
 
-import cn.tkk.common.util.SpelHelper;
 import com.github.binlaniua.common.util.SpelHelper;
 
 import javax.validation.ConstraintValidator;

@@ -1,10 +1,8 @@
 package com.github.binlaniua.common.jpa.query;
 
-import cn.tkk.common.jpa.query.config.*;
-import cn.tkk.common.jpa.query.value.FetchItem;
-import cn.tkk.common.jpa.query.value.QueryItem;
-import cn.tkk.common.jpa.query.value.SortItem;
-import com.github.binlaniua.common.jpa.query.config.JoinFetchs;
+import com.github.binlaniua.common.jpa.query.config.*;
+import com.github.binlaniua.common.jpa.query.value.FetchItem;
+import com.github.binlaniua.common.jpa.query.value.QueryItem;
 import com.github.binlaniua.common.jpa.query.value.SortItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;

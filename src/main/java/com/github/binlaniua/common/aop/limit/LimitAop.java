@@ -1,8 +1,6 @@
 package com.github.binlaniua.common.aop.limit;
 
-import cn.tkk.common.aop.BaseAop;
-import cn.tkk.common.exception.SystemException;
-import cn.tkk.common.util.SpelHelper;
+import com.github.binlaniua.common.aop.BaseAop;
 import com.github.binlaniua.common.exception.SystemException;
 import com.github.binlaniua.common.util.SpelHelper;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +23,7 @@ public class LimitAop extends BaseAop {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @Before("@annotation(cn.tkk.common.aop.limit.Limit)")
+    @Before("@annotation(com.github.binlaniua.common.aop.limit.Limit)")
     void execute(final JoinPoint joinPoint) throws Throwable {
 
         //

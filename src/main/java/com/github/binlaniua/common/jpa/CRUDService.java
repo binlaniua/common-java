@@ -1,18 +1,13 @@
 package com.github.binlaniua.common.jpa;
 
 
-import cn.tkk.common.exception.SystemException;
-import cn.tkk.common.jpa.query.PredicateBuilder;
-import cn.tkk.common.jpa.query.QueryFactory;
-import cn.tkk.common.request.AddRequest;
-import cn.tkk.common.request.EditRequest;
-import cn.tkk.common.request.InfoRequest;
-import cn.tkk.common.request.PageRequest;
-import cn.tkk.common.util.BeanHelper;
 import com.github.binlaniua.common.exception.SystemException;
+import com.github.binlaniua.common.jpa.query.PredicateBuilder;
 import com.github.binlaniua.common.jpa.query.QueryFactory;
+import com.github.binlaniua.common.request.AddRequest;
 import com.github.binlaniua.common.request.EditRequest;
 import com.github.binlaniua.common.request.InfoRequest;
+import com.github.binlaniua.common.request.PageRequest;
 import com.github.binlaniua.common.util.BeanHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;

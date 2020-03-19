@@ -1,11 +1,5 @@
 package com.github.binlaniua.common.jpa.query;
 
-import cn.tkk.common.jpa.query.config.QueryJoinType;
-import cn.tkk.common.jpa.query.factory.PredicateFetchFactory;
-import cn.tkk.common.jpa.query.value.ExistColumn;
-import cn.tkk.common.jpa.query.value.FetchItem;
-import cn.tkk.common.jpa.query.value.QueryItem;
-import cn.tkk.common.jpa.query.value.SortItem;
 import com.github.binlaniua.common.jpa.query.config.QueryJoinType;
 import com.github.binlaniua.common.jpa.query.factory.PredicateFetchFactory;
 import com.github.binlaniua.common.jpa.query.value.ExistColumn;

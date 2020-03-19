@@ -1,8 +1,7 @@
 package com.github.binlaniua.common.jpa.query.value;
 
-import cn.tkk.common.jpa.query.config.QueryConditionType;
-import cn.tkk.common.jpa.query.config.QueryJoinType;
 import com.github.binlaniua.common.jpa.query.config.QueryConditionType;
+import com.github.binlaniua.common.jpa.query.config.QueryJoinType;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 

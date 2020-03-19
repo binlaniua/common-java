@@ -1,7 +1,7 @@
 package com.github.binlaniua.common.jpa.query.factory;
 
-import cn.tkk.common.jpa.query.config.QueryJoinType;
-import cn.tkk.common.jpa.query.value.FetchItem;
+import com.github.binlaniua.common.jpa.query.config.QueryJoinType;
+import com.github.binlaniua.common.jpa.query.value.FetchItem;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;

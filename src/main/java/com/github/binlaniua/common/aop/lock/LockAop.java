@@ -1,7 +1,6 @@
 package com.github.binlaniua.common.aop.lock;
 
-import cn.tkk.common.aop.BaseAop;
-import cn.tkk.common.util.SpelHelper;
+import com.github.binlaniua.common.aop.BaseAop;
 import com.github.binlaniua.common.util.SpelHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,7 +25,7 @@ public class LockAop extends BaseAop {
     @Autowired
     private RedissonClient redissonClient;
 
-    @Around("@annotation(cn.tkk.common.aop.lock.Lock)")
+    @Around("@annotation(com.github.binlaniua.common.aop.lock.Lock)")
     Object execute(final ProceedingJoinPoint joinPoint) throws Throwable {
         //
         final Method method = this.getMethod(joinPoint);

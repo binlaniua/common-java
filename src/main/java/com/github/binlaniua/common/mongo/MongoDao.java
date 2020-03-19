@@ -1,7 +1,5 @@
 package com.github.binlaniua.common.mongo;
 
-import cn.tkk.common.mongo.query.Condition;
-import cn.tkk.common.request.PageRequest;
 import com.github.binlaniua.common.mongo.query.Condition;
 import com.github.binlaniua.common.request.PageRequest;
 import com.mongodb.client.result.UpdateResult;

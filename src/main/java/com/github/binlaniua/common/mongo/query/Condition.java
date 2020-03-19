@@ -1,7 +1,5 @@
 package com.github.binlaniua.common.mongo.query;
 
-import cn.tkk.common.jpa.query.value.SortItem;
-import cn.tkk.common.request.PageRequest;
 import com.github.binlaniua.common.jpa.query.value.SortItem;
 import com.github.binlaniua.common.request.PageRequest;
 import lombok.AllArgsConstructor;

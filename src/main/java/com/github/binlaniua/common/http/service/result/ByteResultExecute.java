@@ -1,6 +1,5 @@
 package com.github.binlaniua.common.http.service.result;
 
-import cn.tkk.common.http.service.HttpException;
 import com.github.binlaniua.common.http.service.HttpException;
 import okhttp3.Request;
 import okhttp3.Response;
